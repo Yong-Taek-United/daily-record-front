@@ -1,6 +1,11 @@
-import { CSSProperties, ChangeEvent, HTMLInputTypeAttribute } from 'react';
+import {
+  CSSProperties,
+  ChangeEvent,
+  HTMLInputTypeAttribute,
+  InputHTMLAttributes,
+} from 'react';
 
-type InputPropsTypes = {
+interface InputPropsTypes extends InputHTMLAttributes<HTMLInputElement> {
   style?: CSSProperties;
   type?: HTMLInputTypeAttribute;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -9,7 +14,8 @@ type InputPropsTypes = {
   label: string;
   required?: boolean;
   value?: string;
-};
+  error?: any;
+}
 
 export default function Input({
   style,
@@ -20,37 +26,31 @@ export default function Input({
   label,
   required = false,
   value,
+  error,
+  ...props
 }: InputPropsTypes) {
   return (
-    <div>
+    <div className="mt-2">
       <div className="flex ">
-        <label
-          className="font-bold"
-          style={{ fontSize: 12, lineHeight: 2 }}
-          htmlFor={name}
-        >
+        <label className="font-bold text-sm" htmlFor={name}>
           {label}
         </label>
         {required && (
           <div className="ml-1">
-            <span className="text-red-600 text-xs">*</span>
+            <span className="text-red-600 text-sm">*</span>
           </div>
         )}
       </div>
       <input
+        {...props}
         id={name}
         name={name}
-        className="p-2 border rounded-md text-xs mb-3"
+        className={`p-2 rounded-md text-sm border w-96 h-10
+        ${error ? 'border-red-500' : 'border-[#b2b2b2]'}`}
         onChange={onChange}
         type={type}
         placeholder={placeholder}
-        style={{
-          ...style,
-          minWidth: 268,
-          minHeight: 32,
-          borderColor: '#b2b2b2',
-        }}
-        required={required}
+        style={{ ...style }}
         value={value}
       />
     </div>
