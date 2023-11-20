@@ -2,6 +2,8 @@ import useForm from '@/hooks/useForm';
 import Input from '../Input';
 import ErrorMsg from '../ErrorMsg';
 import Button from '../Button';
+import { login } from '@/api/account/login';
+import { useRouter } from 'next/router';
 
 export type LoginFormTypes = {
   email: string;
@@ -9,6 +11,7 @@ export type LoginFormTypes = {
 };
 
 export default function LoginForm() {
+  const router = useRouter();
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
     useForm<LoginFormTypes>({
       initialValues: { email: '', password: '' },
@@ -35,7 +38,16 @@ export default function LoginForm() {
 
         return errors;
       },
-      onSubmit(values) {},
+      async onSubmit(values) {
+        // 로그인 로직입니다.
+        try {
+          const res = await login(values);
+          console.log(res);
+          // router.push('/');
+        } catch (error) {
+          console.log(error);
+        }
+      },
     });
 
   return (
