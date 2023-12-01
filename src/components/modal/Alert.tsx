@@ -7,7 +7,10 @@ export default function Alert({ visible, onClose }: AlertProps) {
     <Modal visible={visible} onClose={onClose}>
       <div className="w-80 h-52 bg-white rounded-lg px-7 py-4">
         <div className="h-6">
-          <button className="absolute right-3 hover:bg-gray-200 rounded-sm w-5 h-5">
+          <button
+            onClick={onClose}
+            className="absolute right-3 hover:bg-gray-200 rounded-sm w-5 h-5"
+          >
             <SvgX className="m-auto" width={14} height={14} />
           </button>
         </div>
