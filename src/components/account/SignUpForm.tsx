@@ -3,6 +3,9 @@ import Input from '../Input';
 import ErrorMsg from '../ErrorMsg';
 import Button from '../Button';
 import { useRouter } from 'next/router';
+import { sendVerification } from '@/api/account/signUp';
+import { useRef, useState } from 'react';
+import Alert from '../modal/Alert';
 
 export type SignUpFormTypes = {
   email: string;
@@ -13,6 +16,9 @@ export type SignUpFormTypes = {
 
 export default function SignUpForm() {
   const router = useRouter();
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  const [sendAuth, setSendAuth] = useState<boolean>(false);
+  const [openAlert, setOpenAlert] = useState<boolean>(false);
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
     useForm<SignUpFormTypes>({
       initialValues: {
@@ -29,7 +35,6 @@ export default function SignUpForm() {
           confirmPassword: '',
         };
 
-        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
         const pwdRegex =
           /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,20}$/;
 
@@ -70,9 +75,32 @@ export default function SignUpForm() {
       },
     });
 
+  const handleSendVerificationMail = async () => {
+    const isValidEmail = emailRegex.test(values.email);
+    if (!values.email || !isValidEmail) {
+      return;
+    }
+
+    try {
+      const { data } = await sendVerification({ email: values.email });
+      if (data) {
+        // 성공 처리하기
+        console.log(data);
+
+        setSendAuth(true);
+        setOpenAlert(true);
+      }
+    } catch (error) {
+      if (error) {
+        // 에러 처리
+        console.error(error);
+      }
+    }
+  };
+
   return (
     <form onSubmit={handleSubmit}>
-      <div className="my-5">
+      <div className="my-5 relative">
         <Input
           onChange={handleChange}
           onBlur={handleBlur}
@@ -83,6 +111,14 @@ export default function SignUpForm() {
           error={touched?.email && errors?.email}
           required
         />
+        <div
+          onClick={handleSendVerificationMail}
+          className="absolute cursor-pointer right-3 text-sm text-blue-500 hover:underline decoration-1 decoration-blue-700 "
+          style={{ top: 33 }}
+        >
+          {sendAuth ? '다시 보내기' : '이메일 인증'}
+        </div>
+
         <ErrorMsg name="email" errors={errors.email} touched={touched.email} />
       </div>
       <div className="my-5">
@@ -142,6 +178,9 @@ export default function SignUpForm() {
       <Button type="submit" style={{ marginTop: '1.5rem' }}>
         작성 완료하고 가입하기
       </Button>
+      {openAlert && (
+        <Alert visible={openAlert} onClose={() => setOpenAlert(false)} />
+      )}
     </form>
   );
 }
