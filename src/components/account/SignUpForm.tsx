@@ -4,7 +4,7 @@ import ErrorMsg from '../ErrorMsg';
 import Button from '../Button';
 import { useRouter } from 'next/router';
 import { sendVerification } from '@/api/account/signUp';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import Alert from '../modal/Alert';
 
 export type SignUpFormTypes = {
@@ -19,6 +19,7 @@ export default function SignUpForm() {
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const [sendAuth, setSendAuth] = useState<boolean>(false);
   const [openAlert, setOpenAlert] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
     useForm<SignUpFormTypes>({
       initialValues: {
@@ -82,6 +83,7 @@ export default function SignUpForm() {
     }
 
     try {
+      setIsLoading(true);
       const { data } = await sendVerification({ email: values.email });
       if (data) {
         // 성공 처리하기
@@ -95,6 +97,8 @@ export default function SignUpForm() {
         // 에러 처리
         console.error(error);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -116,7 +120,13 @@ export default function SignUpForm() {
           className="absolute cursor-pointer right-3 text-sm text-blue-500 hover:underline decoration-1 decoration-blue-700 "
           style={{ top: 33 }}
         >
-          {sendAuth ? '다시 보내기' : '이메일 인증'}
+          {isLoading ? (
+            <div className="border-gray-300 h-5 w-5 animate-spin rounded-full border-2 border-t-blue-600 border-r-blue-600" />
+          ) : sendAuth ? (
+            '다시 보내기'
+          ) : (
+            '이메일 인증'
+          )}
         </div>
 
         <ErrorMsg name="email" errors={errors.email} touched={touched.email} />
