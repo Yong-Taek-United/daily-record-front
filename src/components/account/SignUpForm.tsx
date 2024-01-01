@@ -3,9 +3,11 @@ import Input from '../Input';
 import ErrorMsg from '../ErrorMsg';
 import Button from '../Button';
 import { useRouter } from 'next/router';
-import { sendVerification } from '@/api/account/signUp';
-import { useState } from 'react';
+import { sendVerification, verifyEmailAuth } from '@/api/account/signUp';
+import { useEffect, useState } from 'react';
 import Alert from '../modal/Alert';
+import useSWR from 'swr';
+import SvgCheck from '../../../public/images/authCheckImg.svg';
 
 export type SignUpFormTypes = {
   email: string;
@@ -16,10 +18,32 @@ export type SignUpFormTypes = {
 
 export default function SignUpForm() {
   const router = useRouter();
+  const checkEmailFetcher = async (email: string) => {
+    try {
+      const { data } = await verifyEmailAuth({ email: values.email });
+      if (data) return data;
+    } catch (error) {
+      throw error;
+    }
+  };
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const [sendAuth, setSendAuth] = useState<boolean>(false);
+  const [isChecked, setIsChecked] = useState<boolean>(false);
   const [openAlert, setOpenAlert] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const checkEmail = useSWR(
+    sendAuth && !isChecked ? '/emails/email-verification/check' : null,
+    checkEmailFetcher
+  );
+
+  console.log('인증??? ', checkEmail.data, '에러러러??', checkEmail.error);
+  useEffect(() => {
+    if (checkEmail.data?.status === 200) {
+      setIsChecked(true);
+    }
+  }, [checkEmail.data]);
+
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
     useForm<SignUpFormTypes>({
       initialValues: {
@@ -72,7 +96,7 @@ export default function SignUpForm() {
         return errors;
       },
       async onSubmit(values) {
-        return;
+        return console.log('접수!');
       },
     });
 
@@ -104,7 +128,7 @@ export default function SignUpForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="my-5 relative">
+      <div className="relative my-5">
         <Input
           onChange={handleChange}
           onBlur={handleBlur}
@@ -115,19 +139,26 @@ export default function SignUpForm() {
           error={touched?.email && errors?.email}
           required
         />
-        <div
-          onClick={handleSendVerificationMail}
-          className="absolute cursor-pointer right-3 text-sm text-blue-500 hover:underline decoration-1 decoration-blue-700 "
-          style={{ top: 33 }}
-        >
-          {isLoading ? (
-            <div className="border-gray-300 h-5 w-5 animate-spin rounded-full border-2 border-t-blue-600 border-r-blue-600" />
-          ) : sendAuth ? (
-            '다시 보내기'
-          ) : (
-            '이메일 인증'
-          )}
-        </div>
+        {!isChecked ? (
+          <div
+            onClick={handleSendVerificationMail}
+            className="absolute text-sm text-blue-500 cursor-pointer right-3 hover:underline decoration-1 decoration-blue-700 "
+            style={{ top: 33 }}
+          >
+            {isLoading ? (
+              <div className="w-5 h-5 border-2 border-gray-300 rounded-full animate-spin border-t-blue-600 border-r-blue-600" />
+            ) : sendAuth ? (
+              '다시 보내기'
+            ) : (
+              '이메일 인증'
+            )}
+          </div>
+        ) : (
+          <div className="absolute flex right-3" style={{ top: 33 }}>
+            <SvgCheck className="my-auto mr-1" />
+            <p className="text-sm text-green-500">인증 완료</p>
+          </div>
+        )}
 
         <ErrorMsg name="email" errors={errors.email} touched={touched.email} />
       </div>
