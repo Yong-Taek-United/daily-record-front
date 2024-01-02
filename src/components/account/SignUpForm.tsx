@@ -3,7 +3,11 @@ import Input from '../Input';
 import ErrorMsg from '../ErrorMsg';
 import Button from '../Button';
 import { useRouter } from 'next/router';
-import { sendVerification, verifyEmailAuth } from '@/api/account/signUp';
+import {
+  sendVerification,
+  signUp,
+  verifyEmailAuth,
+} from '@/api/account/signUp';
 import { useEffect, useState } from 'react';
 import Alert from '../modal/Alert';
 import useSWR from 'swr';
@@ -96,6 +100,17 @@ export default function SignUpForm() {
         return errors;
       },
       async onSubmit(values) {
+        try {
+          const res = await signUp({
+            email: values.email,
+            nickname: values.nickname,
+            password: values.password,
+          });
+          console.log(res);
+        } catch (error) {
+          console.log(error);
+        }
+
         return console.log('접수!');
       },
     });
