@@ -80,6 +80,10 @@ export default function SignUpForm() {
           errors.email = '이메일 형식으로 입력해 주세요';
         }
 
+        if (!isChecked) {
+          errors.email = '이메일을 인증해 주세요';
+        }
+
         if (!values.nickname) {
           errors.nickname = '이름을 입력하세요';
         }
