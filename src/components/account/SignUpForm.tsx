@@ -2,7 +2,6 @@ import useForm from '@/hooks/useForm';
 import Input from '../Input';
 import ErrorMsg from '../ErrorMsg';
 import Button from '../Button';
-import { useRouter } from 'next/router';
 import {
   sendVerification,
   signUp,
@@ -12,6 +11,7 @@ import { useEffect, useState } from 'react';
 import Alert from '../modal/Alert';
 import useSWR from 'swr';
 import SvgCheck from '../../../public/images/authCheckImg.svg';
+import axios from 'axios';
 
 export type SignUpFormTypes = {
   email: string;
@@ -21,7 +21,6 @@ export type SignUpFormTypes = {
 };
 
 export default function SignUpForm() {
-  const router = useRouter();
   const checkEmailFetcher = async (email: string) => {
     try {
       const { data } = await verifyEmailAuth({ email: values.email });
@@ -33,7 +32,12 @@ export default function SignUpForm() {
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const [sendAuth, setSendAuth] = useState<boolean>(false);
   const [isChecked, setIsChecked] = useState<boolean>(false);
-  const [openAlert, setOpenAlert] = useState<boolean>(false);
+  const [openAlert, setOpenAlert] = useState<{
+    state: boolean;
+    title?: string;
+    content: string;
+  }>({ state: false, title: '', content: '' });
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const checkEmail = useSWR(
@@ -106,12 +110,24 @@ export default function SignUpForm() {
             nickname: values.nickname,
             password: values.password,
           });
-          console.log(res);
+          if (res.status === 201) {
+            setOpenAlert({
+              state: true,
+              title: '알림',
+              content: '계정이 생성되었습니다.',
+            });
+            clearErrors();
+            clearForm();
+          }
         } catch (error) {
-          console.log(error);
+          if (axios.isAxiosError<{ message: string }>(error)) {
+            setOpenAlert({
+              state: true,
+              title: '실패',
+              content: `${error.response?.data.message}`,
+            });
+          }
         }
-
-        return console.log('접수!');
       },
     });
 
@@ -126,19 +142,38 @@ export default function SignUpForm() {
       const { data } = await sendVerification({ email: values.email });
       if (data) {
         // 성공 처리하기
-        console.log(data);
-
         setSendAuth(true);
-        setOpenAlert(true);
+        setOpenAlert({
+          state: true,
+          content: '인증 메일을 전송하였습니다.',
+          title: '알림',
+        });
       }
     } catch (error) {
       if (error) {
         // 에러 처리
-        console.error(error);
+        setOpenAlert({
+          state: true,
+          content: '다시 시도해 주세요.',
+          title: '실패',
+        });
       }
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const clearErrors = () => {
+    errors.confirmPassword = '';
+    errors.email = '';
+    errors.nickname = '';
+    errors.password = '';
+  };
+  const clearForm = () => {
+    values.email = '';
+    values.nickname = '';
+    values.password = '';
+    values.confirmPassword = '';
   };
 
   return (
@@ -234,8 +269,13 @@ export default function SignUpForm() {
       <Button type="submit" style={{ marginTop: '1.5rem' }}>
         작성 완료하고 가입하기
       </Button>
-      {openAlert && (
-        <Alert visible={openAlert} onClose={() => setOpenAlert(false)} />
+      {openAlert.state && (
+        <Alert
+          visible={openAlert.state}
+          onClose={() => setOpenAlert({ state: false, title: '', content: '' })}
+          title={openAlert.title}
+          content={openAlert.content}
+        />
       )}
     </form>
   );
