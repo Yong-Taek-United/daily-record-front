@@ -1,11 +1,19 @@
 import Modal, { ModalProps } from '../UI/Modal';
 import SvgX from '../../../public/images/x.svg';
-interface AlertProps extends ModalProps {}
+interface AlertProps extends ModalProps {
+  title?: string;
+  content: string;
+}
 
-export default function Alert({ visible, onClose }: AlertProps) {
+export default function Alert({
+  visible,
+  onClose,
+  title = '알림',
+  content,
+}: AlertProps) {
   return (
     <Modal visible={visible} onClose={onClose}>
-      <div className="w-80 h-52 bg-white rounded-lg px-7 py-4">
+      <div className={`w-80 h-52 bg-white rounded-lg px-7 py-4 `}>
         <div className="h-6">
           <button
             onClick={onClose}
@@ -23,9 +31,9 @@ export default function Alert({ visible, onClose }: AlertProps) {
           }}
         >
           <div>
-            <p className="text-xl font-bold text-center">알림</p>
+            <p className="text-xl font-bold text-center">{title}</p>
             <div className="my-3">
-              <p className="text-center">인증 메일을 전송하였습니다.</p>
+              <p className="text-center">{content}</p>
             </div>
           </div>
 
