@@ -150,11 +150,11 @@ export default function SignUpForm() {
         });
       }
     } catch (error) {
-      if (error) {
+      if (axios.isAxiosError<{ message: string }>(error)) {
         // 에러 처리
         setOpenAlert({
           state: true,
-          content: '다시 시도해 주세요.',
+          content: `${error.response?.data.message}`,
           title: '실패',
         });
       }
