@@ -4,7 +4,7 @@ export async function verifyEmailAuthForPwd({ email }: { email: string }) {
   try {
     const { status, data } = await instance.post('/emails/reset-password', {
       email,
-      emailType: 'VERIFICATION',
+      emailType: 'PASSWORD',
     });
     if (status === 200) {
       return { data: { data, status } };
