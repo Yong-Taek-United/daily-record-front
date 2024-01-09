@@ -12,6 +12,7 @@ import Alert from '../modal/Alert';
 import useSWR from 'swr';
 import SvgCheck from '../../../public/images/authCheckImg.svg';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 export type SignUpFormTypes = {
   email: string;
@@ -29,6 +30,8 @@ export default function SignUpForm() {
       throw error;
     }
   };
+
+  const router = useRouter();
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const [sendAuth, setSendAuth] = useState<boolean>(false);
   const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -36,16 +39,18 @@ export default function SignUpForm() {
     state: boolean;
     title?: string;
     content: string;
+    handleAlertConfirmation?: () => void;
+    handleCloseAlert?: () => void;
   }>({ state: false, title: '', content: '' });
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [submitLoading, setSubmitLoading] = useState<boolean>(false);
 
   const checkEmail = useSWR(
     sendAuth && !isChecked ? '/emails/email-verification/check' : null,
     checkEmailFetcher
   );
 
-  console.log('인증??? ', checkEmail.data, '에러러러??', checkEmail.error);
   useEffect(() => {
     if (checkEmail.data?.status === 200) {
       setIsChecked(true);
@@ -108,6 +113,7 @@ export default function SignUpForm() {
         return errors;
       },
       async onSubmit(values) {
+        setSubmitLoading(true);
         try {
           const res = await signUp({
             email: values.email,
@@ -119,6 +125,14 @@ export default function SignUpForm() {
               state: true,
               title: '알림',
               content: '계정이 생성되었습니다.',
+              handleAlertConfirmation: () => {
+                router.push('/account/login');
+                setOpenAlert({ state: false, content: '' });
+              },
+              handleCloseAlert: () => {
+                router.push('/account/login');
+                setOpenAlert({ state: false, content: '' });
+              },
             });
             clearErrors();
             clearForm();
@@ -131,6 +145,8 @@ export default function SignUpForm() {
               content: `${error.response?.data.message}`,
             });
           }
+        } finally {
+          setSubmitLoading(false);
         }
       },
     });
@@ -270,7 +286,11 @@ export default function SignUpForm() {
         />
       </div>
 
-      <Button type="submit" style={{ marginTop: '1.5rem' }}>
+      <Button
+        disabled={submitLoading}
+        type="submit"
+        style={{ marginTop: '1.5rem' }}
+      >
         작성 완료하고 가입하기
       </Button>
       {openAlert.state && (
@@ -279,6 +299,8 @@ export default function SignUpForm() {
           onClose={() => setOpenAlert({ state: false, title: '', content: '' })}
           title={openAlert.title}
           content={openAlert.content}
+          handleAlertConfirmation={openAlert.handleAlertConfirmation}
+          handleCloseAlert={openAlert.handleCloseAlert}
         />
       )}
     </form>
