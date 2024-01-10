@@ -17,6 +17,7 @@ export default function FindPasswordForm() {
     title?: string;
     content: string;
   }>({ state: false, title: '', content: '' });
+  const [submitLoading, setSubmitLoading] = useState<boolean>(false);
 
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
     useForm<FindPasswordFormType>({
@@ -43,6 +44,7 @@ export default function FindPasswordForm() {
       },
       async onSubmit(values) {
         try {
+          setSubmitLoading(true);
           const { data } = await verifyEmailAuthForPwd(values);
           if (data.status === 200) {
             setOpenAlert({
@@ -58,6 +60,8 @@ export default function FindPasswordForm() {
               content: `${error.response?.data.message}`,
             });
           }
+        } finally {
+          setSubmitLoading(false);
         }
       },
     });
@@ -88,7 +92,11 @@ export default function FindPasswordForm() {
         />
         <ErrorMsg name="email" errors={errors.email} touched={touched.email} />
       </div>
-      <Button type="submit" style={{ marginTop: '1.5rem' }}>
+      <Button
+        disabled={submitLoading}
+        type="submit"
+        style={{ marginTop: '1.5rem' }}
+      >
         이메일 보내기
       </Button>
       {openAlert.state && (

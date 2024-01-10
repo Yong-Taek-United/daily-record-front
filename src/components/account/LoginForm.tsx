@@ -4,6 +4,7 @@ import ErrorMsg from '../ErrorMsg';
 import Button from '../Button';
 import { login } from '@/api/account/login';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 export type LoginFormTypes = {
   email: string;
@@ -12,6 +13,7 @@ export type LoginFormTypes = {
 
 export default function LoginForm() {
   const router = useRouter();
+  const [submitLoading, setSubmitLoading] = useState<boolean>(false);
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
     useForm<LoginFormTypes>({
       initialValues: { email: '', password: '' },
@@ -41,11 +43,14 @@ export default function LoginForm() {
       async onSubmit(values) {
         // 로그인 로직입니다.
         try {
+          setSubmitLoading(true);
           const res = await login(values);
           console.log(res);
           // router.push('/');
         } catch (error) {
           console.log(error);
+        } finally {
+          setSubmitLoading(false);
         }
       },
     });
@@ -83,8 +88,20 @@ export default function LoginForm() {
           touched={touched.password}
         />
       </div>
+      <div>
+        <p
+          onClick={() => router.push('/account/findPassword')}
+          className="text-base font-semibold text-right text-gray-500 cursor-pointer"
+        >
+          비밀번호 찾기
+        </p>
+      </div>
 
-      <Button type="submit" style={{ marginTop: '1.5rem' }}>
+      <Button
+        disabled={submitLoading}
+        type="submit"
+        style={{ marginTop: '1.5rem' }}
+      >
         로그인
       </Button>
     </form>
