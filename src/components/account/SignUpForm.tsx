@@ -51,12 +51,6 @@ export default function SignUpForm() {
     checkEmailFetcher
   );
 
-  useEffect(() => {
-    if (checkEmail.data?.status === 200) {
-      setIsChecked(true);
-    }
-  }, [checkEmail.data]);
-
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
     useForm<SignUpFormTypes>({
       initialValues: {
@@ -150,6 +144,13 @@ export default function SignUpForm() {
         }
       },
     });
+
+  useEffect(() => {
+    if (checkEmail.data?.status === 200) {
+      setIsChecked(true);
+      errors.email = '';
+    }
+  }, [checkEmail.data, errors]);
 
   const handleSendVerificationMail = async () => {
     const isValidEmail = emailRegex.test(values.email);
