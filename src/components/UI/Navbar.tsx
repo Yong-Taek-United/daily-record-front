@@ -1,6 +1,18 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
+type MenuListType = {
+  name: string;
+  path?: string;
+  method?: () => void;
+};
+
+const MENU_LIST: MenuListType[] = [
+  { name: '내 프로필', path: '/account/info' },
+  { name: '설정', path: '/account/manage' },
+  { name: '로그아웃', method: () => null },
+];
+
 export default function Navbar() {
   const router = useRouter();
   const [openMenu, setOpenMenu] = useState(false);
@@ -26,24 +38,20 @@ export default function Navbar() {
             <div className="w-40 p-2 border-b">
               <button className="font-semibold">앵가리</button>
             </div>
-            <div className="p-2">
-              <button
-                onClick={() => router.push('/account/info')}
-                className="font-medium text-[#828282] hover:text-black duration-500"
-              >
-                내 프로필
-              </button>
-            </div>
-            <div className="p-2">
-              <button onClick={() => router.push('/account/manage')} className="font-medium text-[#828282]  hover:text-black duration-500 ">
-                설정
-              </button>
-            </div>
-            <div className="p-2">
-              <button className="font-medium text-[#828282] hover:text-black duration-500">
-                로그아웃
-              </button>
-            </div>
+            {MENU_LIST.map((menu, i) => (
+              <div key={menu.name} className="p-2">
+                <button
+                  onClick={
+                    !menu.method
+                      ? () => router.push(`${menu.path}`)
+                      : menu.method
+                  }
+                  className="w-full text-left font-medium text-[#828282] hover:text-black duration-500"
+                >
+                  {menu.name}
+                </button>
+              </div>
+            ))}
           </div>
         ) : null}
       </div>
