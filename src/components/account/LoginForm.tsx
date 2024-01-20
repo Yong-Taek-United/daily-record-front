@@ -2,7 +2,7 @@ import useForm from '@/hooks/useForm';
 import Input from '../Input';
 import ErrorMsg from '../ErrorMsg';
 import Button from '../Button';
-import { login } from '@/api/account/login';
+import { login } from '@/api/account/auth';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
