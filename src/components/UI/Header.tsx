@@ -1,3 +1,4 @@
+import { logout } from '@/api/account/auth';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
@@ -13,9 +14,18 @@ const MENU_LIST: MenuListType[] = [
   { name: '로그아웃', method: () => null },
 ];
 
-export default function Navbar() {
+export default function Header() {
   const router = useRouter();
   const [openMenu, setOpenMenu] = useState(false);
+
+  const handleLogout = async () => {
+    try {
+      const { data, status } = await logout();
+      if (status === 200) {
+        router.push('/account/login');
+      }
+    } catch (error) {}
+  };
   return (
     <div className="w-full h-16 bg-white flex justify-between p-4">
       <div className="my-auto">
