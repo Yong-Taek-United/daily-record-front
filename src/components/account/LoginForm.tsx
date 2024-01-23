@@ -5,6 +5,8 @@ import Button from '../Button';
 import { login } from '@/api/account/auth';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import Alert from '../modal/Alert';
+import axios from 'axios';
 
 export type LoginFormTypes = {
   email: string;
@@ -14,6 +16,14 @@ export type LoginFormTypes = {
 export default function LoginForm() {
   const router = useRouter();
   const [submitLoading, setSubmitLoading] = useState<boolean>(false);
+  const [openAlert, setOpenAlert] = useState<{
+    state: boolean;
+    title?: string;
+    content: string;
+    handleAlertConfirmation?: () => void;
+    handleCloseAlert?: () => void;
+  }>({ state: false, title: '', content: '' });
+
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
     useForm<LoginFormTypes>({
       initialValues: { email: '', password: '' },
@@ -45,10 +55,17 @@ export default function LoginForm() {
         try {
           setSubmitLoading(true);
           const res = await login(values);
-          console.log(res);
-          // router.push('/');
+          if (res.status === 200) {
+            router.push('/main');
+          }
         } catch (error) {
-          console.log(error);
+          if (axios.isAxiosError<{ message: string }>(error)) {
+            setOpenAlert({
+              state: true,
+              title: '실패',
+              content: `${error.response?.data.message}`,
+            });
+          }
         } finally {
           setSubmitLoading(false);
         }
@@ -104,6 +121,16 @@ export default function LoginForm() {
       >
         로그인
       </Button>
+      {openAlert.state && (
+        <Alert
+          visible={openAlert.state}
+          onClose={() => setOpenAlert({ state: false, title: '', content: '' })}
+          title={openAlert.title}
+          content={openAlert.content}
+          handleAlertConfirmation={openAlert.handleAlertConfirmation}
+          handleCloseAlert={openAlert.handleCloseAlert}
+        />
+      )}
     </form>
   );
 }
