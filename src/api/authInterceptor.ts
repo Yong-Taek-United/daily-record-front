@@ -43,10 +43,10 @@ export const authInterceptors = (instance: AxiosInstance) => {
         config,
       } = axiosError;
 
-      if (status && error.path === REFRESH_API) {
+      if (status === 401 && error.path === REFRESH_API) {
         // refreshToken도 만료
-        window.location.href = '/account/login';
-      } else if (status === 401) {
+        return (window.location.href = '/account/login');
+      } else if (status === 401 && error.path !== '/auth/login') {
         // accessToken 토큰 만료 됐을때 리프래쉬 실행
         try {
           if (!lock) {
@@ -72,9 +72,9 @@ export const authInterceptors = (instance: AxiosInstance) => {
           console.log('interceptor error ', error);
         }
       } else {
-        return Promise.resolve(config);
+        return Promise.reject(axiosError);
       }
-      return Promise.reject(axiosError);
+      return Promise.resolve(config);
     }
   );
 };
