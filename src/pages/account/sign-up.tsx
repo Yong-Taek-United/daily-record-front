@@ -21,7 +21,7 @@ export default function SignUp() {
           <button
             className="bg-white p-3 flex-1 rounded-t-lg font-bold text-lg"
             onClick={() =>
-              router.push({ pathname: '/account/signUp' }, undefined, {
+              router.push({ pathname: '/account/sign-up' }, undefined, {
                 shallow: true,
               })
             }

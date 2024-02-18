@@ -20,7 +20,7 @@ export default function LoginPage() {
           <button
             className="p-3 flex-1 rounded-t-lg font-semibold text-lg text-gray-400"
             onClick={() =>
-              router.push({ pathname: '/account/signUp' }, undefined, {
+              router.push({ pathname: '/account/sign-up' }, undefined, {
                 shallow: true,
               })
             }
