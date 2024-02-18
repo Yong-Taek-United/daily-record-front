@@ -7,6 +7,8 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import Alert from '../modal/Alert';
 import axios from 'axios';
+import { saveDataInLocalStorage } from '@/utils/utils';
+import { SaveUserInfoTypes } from '@/types/user';
 
 export type LoginFormTypes = {
   email: string;
@@ -54,8 +56,14 @@ export default function LoginForm() {
         // 로그인 로직입니다.
         try {
           setSubmitLoading(true);
-          const res = await login(values);
-          if (res.status === 200) {
+          const { data, status } = await login(values);
+          const user: SaveUserInfoTypes = {
+            nickname: data?.data?.nickname,
+            userFile: data?.data?.userFile[0],
+          };
+
+          if (status === 200) {
+            saveDataInLocalStorage('user', user);
             router.push('/main');
           }
         } catch (error) {
@@ -107,7 +115,7 @@ export default function LoginForm() {
       </div>
       <div>
         <p
-          onClick={() => router.push('/account/findPassword')}
+          onClick={() => router.push('/account/find-password')}
           className="text-base font-semibold text-right text-gray-500 cursor-pointer"
         >
           비밀번호 찾기
