@@ -10,9 +10,9 @@ import {
 import { useEffect, useState } from 'react';
 import Alert from '../modal/Alert';
 import useSWR from 'swr';
-import SvgCheck from '../../../public/images/authCheckImg.svg';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import { SvgCheck } from '@/utils/images';
 
 export type SignUpFormTypes = {
   email: string;
