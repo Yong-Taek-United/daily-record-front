@@ -6,12 +6,12 @@ export default function SettingForm() {
   const { data, isLoading } = useSWR('getUserInfo', getUserInfo);
 
   return (
-    <div className="flex flex-col items-center justify-center px-5 pt-4 pb-5 rounded-lg ">
+    <div className="flex flex-col items-center justify-center px-5 pt-4 pb-5 bg-white rounded-lg">
       <div className="flex justify-center my-5">
         <ProfileImg onClick={() => null} height={88} width={88} />
       </div>
 
-      <div className="w-full sm:px-14">
+      <div className="w-full md:px-16">
         <UserInfoField
           label="이름"
           isLoading={isLoading}
