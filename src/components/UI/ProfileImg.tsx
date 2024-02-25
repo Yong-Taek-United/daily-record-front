@@ -14,7 +14,7 @@ export default function ProfileImg({ width, height, onClick }: ProfileImgType) {
     return (
       <button
         onClick={onClick}
-        className={`bg-slate-500 rounded-full`}
+        className={`animate-pulse bg-gray-200 rounded-full`}
         style={{ width, height }}
       ></button>
     );
@@ -23,7 +23,7 @@ export default function ProfileImg({ width, height, onClick }: ProfileImgType) {
     <div>
       <Image
         onClick={onClick}
-        src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${data.data.data.userFile[0].filePath}/${data.data.data.userFile[0].fileName}`}
+        src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${data?.data?.data?.userFile[0].filePath}/${data.data.data.userFile[0].fileName}`}
         alt="profile_img"
         width={width}
         height={height}
