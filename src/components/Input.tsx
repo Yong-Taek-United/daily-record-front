@@ -4,6 +4,7 @@ import {
   HTMLInputTypeAttribute,
   InputHTMLAttributes,
 } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 interface InputPropsTypes extends InputHTMLAttributes<HTMLInputElement> {
   style?: CSSProperties;
@@ -30,14 +31,14 @@ export default function Input({
   ...props
 }: InputPropsTypes) {
   return (
-    <div className="mt-2">
+    <div className="">
       <div className="flex ">
-        <label className="font-bold text-sm" htmlFor={name}>
+        <label className="text-sm font-bold" htmlFor={name}>
           {label}
         </label>
         {required && (
           <div className="ml-1">
-            <span className="text-red-600 text-sm">*</span>
+            <span className="text-sm text-red-600">*</span>
           </div>
         )}
       </div>
@@ -45,8 +46,11 @@ export default function Input({
         {...props}
         id={name}
         name={name}
-        className={`p-2 rounded-md text-sm border w-96 h-10
-        ${error ? 'border-red-500' : 'border-[#b2b2b2]'}`}
+        className={twMerge(
+          `p-2 rounded-md text-sm border w-96 h-10
+        ${error ? 'border-red-500' : 'border-[#b2b2b2]'}`,
+          `${props.className}`
+        )}
         onChange={onChange}
         type={type}
         placeholder={placeholder}

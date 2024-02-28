@@ -1,6 +1,5 @@
 import { getUserInfo, updateUserIntroduce } from '@/api/account/user';
 import Button from '@/components/Button';
-import ErrorMsg from '@/components/ErrorMsg';
 import Input from '@/components/Input';
 import useForm from '@/hooks/useForm';
 import { useState } from 'react';
@@ -49,15 +48,19 @@ export default function ProfileIntroItem() {
       >
         <div className="text-sm text-gray-500">한 줄 소개</div>
         <div className="flex items-center justify-between mt-1">
-          <Input
-            onChange={handleChange}
-            onBlur={handleBlur}
-            name="introduce"
-            label=""
-            placeholder="한 줄 소개를 적어 주세요."
-            value={values.introduce}
-            error={touched?.introduce && errors?.introduce}
-          />
+          <div className="flex-1 mr-3">
+            <Input
+              className="w-full"
+              maxLength={99}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              name="introduce"
+              label=""
+              placeholder="한 줄 소개를 적어 주세요."
+              value={values.introduce}
+              error={touched?.introduce && errors?.introduce}
+            />
+          </div>
 
           <div className="flex justify-start">
             <Button
