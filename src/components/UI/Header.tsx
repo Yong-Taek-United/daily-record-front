@@ -42,6 +42,12 @@ export default function Header() {
         </button>
       </div>
       <div className="relative flex my-auto">
+        <button
+          onClick={() => router.push('/projects/dash-board')}
+          className="mr-4 font-semibold"
+        >
+          내 프로젝트
+        </button>
         <div>
           <ProfileImg
             onClick={() => setOpenMenu(!openMenu)}
