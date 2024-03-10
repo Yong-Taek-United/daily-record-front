@@ -8,3 +8,8 @@ export function getUserInfo(): Promise<
 > {
   return instance.get('/users/info');
 }
+
+/** 회원 프로필 한 줄 소개 변경 */
+export function updateUserIntroduce({ introduce }: { introduce: string }) {
+  return instance.patch('/users/profile', { introduce });
+}
