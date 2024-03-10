@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { instance } from '../instance';
+import { TasksTypes } from '@/types/projects';
 
 export type GetProjectsParams = {
   listSkip: number;
@@ -29,4 +30,12 @@ export async function getProjects({
   return await instance.get('/projects/list', {
     params: { listSkip, listTake, projectStatus },
   });
+}
+
+export async function getTasks({
+  projectId,
+}: {
+  projectId: number;
+}): Promise<AxiosResponse<{ data: TasksTypes[] }>> {
+  return await instance.get(`/tasks/list/${projectId}`);
 }
