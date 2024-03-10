@@ -1,3 +1,3 @@
 import SvgCheck from '@images/authCheckImg.svg';
-
-export { SvgCheck };
+import SvgUpdatePencil from '@images/updateButton.svg';
+export { SvgCheck, SvgUpdatePencil };
