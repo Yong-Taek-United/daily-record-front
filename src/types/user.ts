@@ -6,7 +6,7 @@ export interface UserDataType {
   email: string;
   username: string;
   nickname: string;
-  // passwordChangedAt: null,
+  passwordChangedAt: string;
   isEmailVerified: boolean;
   isPhoneVerified: boolean;
   isActive: boolean;
@@ -24,3 +24,12 @@ export interface UserDataType {
     fileName: string;
   }[];
 }
+
+export type SaveUserInfoTypes = {
+  userFile: {
+    filePath: string;
+    fileName: string;
+  };
+
+  nickname: string;
+};
