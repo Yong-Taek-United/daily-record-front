@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
-import { instance } from '../instance';
 import { TasksTypes } from '@/types/projects';
+import { instanceSSR } from '../authInterceptorWithSSR';
 
 export type GetProjectsParams = {
   listSkip: number;
@@ -27,7 +27,7 @@ export async function getProjects({
   listTake,
   projectStatus,
 }: GetProjectsParams): Promise<AxiosResponse<{ data: GetProjectsRes[] }, any>> {
-  return await instance.get('/projects/list', {
+  return await instanceSSR.get('/projects/list', {
     params: { listSkip, listTake, projectStatus },
   });
 }
@@ -37,5 +37,5 @@ export async function getTasks({
 }: {
   projectId: number;
 }): Promise<AxiosResponse<{ data: TasksTypes[] }>> {
-  return await instance.get(`/tasks/list/${projectId}`);
+  return await instanceSSR.get(`/tasks/list/${projectId}`);
 }
