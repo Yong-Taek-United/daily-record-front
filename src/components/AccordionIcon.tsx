@@ -7,9 +7,9 @@ interface PropsType extends React.HTMLProps<HTMLDivElement> {
 
 const AccordionIcon = ({ isOpen, ...props }: PropsType) => {
   return (
-    <div className={`relative w-6 h-6 ${twMerge(props.className)}`}>
+    <div className={`w-6 h-6 ${twMerge(props.className)}`}>
       <div
-        className={`absolute inset-0 w-full h-full transform transition-transform duration-300 ${
+        className={`inset-0 w-full h-full transform transition-transform duration-300 ${
           isOpen ? '' : 'rotate-180'
         }`}
       >
