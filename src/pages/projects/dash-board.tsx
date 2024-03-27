@@ -1,8 +1,4 @@
-import {
-  GetProjectsParams,
-  GetProjectsRes,
-  getProjects,
-} from '@/api/projects/projects';
+import { GetProjectsRes, getProjects } from '@/api/projects/projects';
 import { setContext } from '@/api/authInterceptorWithSSR';
 import Container from '@/components/UI/Container';
 import Header from '@/components/UI/Header';
@@ -10,7 +6,8 @@ import { ProjectListItem } from '@/components/projects/ProjectListItem';
 import { ProjectFilterType } from '@/types/projects';
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import Button from '@/components/Button';
 
 type ParamsType = {
   page?: string;
@@ -18,6 +15,7 @@ type ParamsType = {
 };
 
 const LIST_TAKE = 10;
+
 const FILTER_LIST: { name: string; value: ProjectFilterType }[] = [
   { name: '진행 중인 프로젝트', value: 'ONGOING' },
   { name: '예정된 프로젝트', value: 'SCHEDULED' },
@@ -30,6 +28,7 @@ export default function DashBoardPage(props: {
   initialPage: number;
   initialFilter: ProjectFilterType;
 }) {
+  const router = useRouter();
   const [listData, setListData] = useState<GetProjectsRes[]>(
     props.initialListData || []
   );
@@ -48,8 +47,14 @@ export default function DashBoardPage(props: {
     <div>
       <Header />
       <Container>
-        <div className="my-4">
-          <h1>대시보드</h1>
+        <div className="flex items-center justify-between py-4 my-4 border-b border-gray-600 ">
+          <h1 className="text-xl font-semibold">대시보드</h1>
+          <Button
+            onClick={() => router.push('/projects/edit')}
+            className="w-auto px-2 text-base bg-blue-600"
+          >
+            프로젝트 생성
+          </Button>
         </div>
 
         {listData.map((project) => (
@@ -72,8 +77,6 @@ export async function getServerSideProps(
       listSkip,
       projectStatus: filter,
     });
-
-    console.log(data);
 
     if (data?.data?.length) {
       return {
