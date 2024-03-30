@@ -72,6 +72,7 @@ export default function useForm<T>({
 
   return {
     values,
+    setValues,
     errors,
     touched,
     handleChange,
