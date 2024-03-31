@@ -32,7 +32,7 @@ export default function Header() {
   };
 
   return (
-    <div className="w-full h-16 bg-white flex justify-between p-4">
+    <div className="flex justify-between w-full h-16 p-4 bg-white">
       <div className="my-auto">
         <button
           onClick={() => router.push('/main')}
@@ -57,35 +57,41 @@ export default function Header() {
         </div>
 
         {openMenu ? (
-          <div
-            className={`absolute z-50 top-10 right-0 w-auto border rounded-md bg-white`}
-          >
-            <div className="w-40 p-2 border-b">
-              <button className="font-semibold">{user?.nickname}</button>
-            </div>
-            {MENU_LIST.map((menu, i) => (
-              <div key={menu.name} className="p-2">
+          <>
+            <div
+              onClick={() => setOpenMenu(false)}
+              className="fixed z-[15] top-0 left-0 w-screen h-screen bg-transparent"
+            ></div>
+            <div
+              className={`absolute z-50 top-10 right-0 w-auto border border-gray-400 rounded-md bg-white`}
+            >
+              <div className="w-40 p-2 border-b border-gray-400">
+                <button className="font-semibold">{user?.nickname}</button>
+              </div>
+              {MENU_LIST.map((menu, i) => (
+                <div key={menu.name} className="p-2">
+                  <button
+                    onClick={
+                      !menu.method
+                        ? () => router.push(`${menu.path}`)
+                        : menu.method
+                    }
+                    className="w-full text-left font-medium text-[#828282] hover:text-black duration-500"
+                  >
+                    {menu.name}
+                  </button>
+                </div>
+              ))}
+              <div className="p-2">
                 <button
-                  onClick={
-                    !menu.method
-                      ? () => router.push(`${menu.path}`)
-                      : menu.method
-                  }
+                  onClick={handleLogout}
                   className="w-full text-left font-medium text-[#828282] hover:text-black duration-500"
                 >
-                  {menu.name}
+                  로그아웃
                 </button>
               </div>
-            ))}
-            <div className="p-2">
-              <button
-                onClick={handleLogout}
-                className="w-full text-left font-medium text-[#828282] hover:text-black duration-500"
-              >
-                로그아웃
-              </button>
             </div>
-          </div>
+          </>
         ) : null}
       </div>
     </div>
