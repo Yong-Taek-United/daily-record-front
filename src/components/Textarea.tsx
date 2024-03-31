@@ -46,7 +46,7 @@ export default function Textarea({
         name={name}
         className={twMerge(
           `p-2 rounded-md text-sm border w-96 h-10
-        ${error ? 'border-red-500' : 'border-[#b2b2b2]'}`,
+        ${error ? 'border-red-500' : 'border-gray-400'}`,
           `${props.className}`
         )}
         onChange={onChange}
