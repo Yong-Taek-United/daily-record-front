@@ -47,7 +47,7 @@ export default function DashBoardPage(props: {
     <div>
       <Header />
       <Container>
-        <div className="flex items-center justify-between py-4 my-4 border-b border-gray-600 ">
+        <div className="flex items-center justify-between py-4 my-4">
           <h1 className="text-xl font-semibold">대시보드</h1>
           <Button
             onClick={() => router.push('/projects/edit')}
@@ -57,8 +57,12 @@ export default function DashBoardPage(props: {
           </Button>
         </div>
 
-        {listData.map((project) => (
-          <ProjectListItem key={project.id} item={project} />
+        {listData.map((project, i) => (
+          <ProjectListItem
+            key={project.id}
+            item={project}
+            isLastItem={listData.length === i + 1}
+          />
         ))}
       </Container>
     </div>
