@@ -16,17 +16,15 @@ export function deleteLocalStorageData(key: string) {
 }
 
 export function calculateDaysBetween(date1: string, date2: string) {
-  // Parse the dates and create Date objects
   const startDate = new Date(date1);
   const endDate = new Date(date2);
 
-  // Calculate the difference in milliseconds
   const diffInMs = Math.abs(endDate.getTime() - startDate.getTime());
 
-  // Convert milliseconds to days
   const diffInDays = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
 
-  return diffInDays;
+  // 기간 총 일수 반환
+  return diffInDays + 1;
 }
 
 // 주기
