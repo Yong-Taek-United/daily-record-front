@@ -15,6 +15,7 @@ export function deleteLocalStorageData(key: string) {
   localStorage.removeItem(key);
 }
 
+// 두 날짜 간 총 일수 계산
 export function calculateDaysBetween(date1: string, date2: string) {
   const startDate = new Date(date1);
   const endDate = new Date(date2);
@@ -25,6 +26,23 @@ export function calculateDaysBetween(date1: string, date2: string) {
 
   // 기간 총 일수 반환
   return diffInDays + 1;
+}
+
+// 두 날짜 간 주말 일수 계산
+export function countWeekendsBetween(startDate: string, endDate: string) {
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  let count = 0;
+
+  for (let day = start; day <= end; day.setDate(day.getDate() + 1)) {
+    let dayOfWeek = day.getDay();
+    if (dayOfWeek === 0 || dayOfWeek === 6) {
+      // 0: Sunday, 6: Saturday
+      count++;
+    }
+  }
+
+  return count;
 }
 
 // 주기
@@ -44,18 +62,3 @@ export const convertCycleToKorean = (
       return '';
   }
 };
-
-// // 두 날짜 간 주말 일수 계산
-// function calculateWeekendsBetweenDates(
-//   startDate: Date,
-//   totalDays: number
-// ): number {
-//   const weekends = Array.from({ length: totalDays }, (_, index) => {
-//     const date = new Date(
-//       startDate.getTime() + index * 24 * 60 * 60 * 1000
-//     );
-//     return date.getDay() === 0 || date.getDay() === 6 ? 1 : 0;
-//   }).reduce((acc, day) => acc + day, 0);
-
-//   return weekends;
-// }
