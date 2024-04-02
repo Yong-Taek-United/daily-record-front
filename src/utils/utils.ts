@@ -62,3 +62,50 @@ export const convertCycleToKorean = (
       return '';
   }
 };
+
+// 주기
+export function convertCycleToNumber(
+  cycleType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR'
+) {
+  switch (cycleType) {
+    case 'DAY':
+      return 1;
+    case 'WEEK':
+      return 7;
+    case 'MONTH':
+      return 30;
+    case 'YEAR':
+      return 365;
+    default:
+      return 0;
+  }
+}
+
+// 주말 제외한 주기 일수 계산
+export function calculateCycleDaysExclWeekends(
+  cycleType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR'
+) {
+  switch (cycleType) {
+    case 'DAY':
+      return 0;
+    case 'WEEK':
+      return 2;
+    case 'MONTH':
+      return 9;
+    case 'YEAR':
+      return 105;
+    default:
+      return 0;
+  }
+}
+
+export function convertCountToKorean(countType: 'COUNT' | 'DURATION') {
+  switch (countType) {
+    case 'COUNT':
+      return '회';
+    case 'DURATION':
+      return '시간';
+    default:
+      return '';
+  }
+}
