@@ -1,5 +1,6 @@
 export type ProjectFilterType = 'ONGOING' | 'SCHEDULED' | 'COMPLETED';
-
+export type CycleType = 'DAY' | 'WEEK' | 'MONTH' | 'YEAR';
+export type CountType = 'COUNT' | 'DURATION';
 export type TasksTypes = {
   id: number;
   title: string;
@@ -14,8 +15,8 @@ export type TasksTypes = {
   deletedAt: Date;
   taskGoal: {
     id: number;
-    cycleType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR';
-    countType: 'COUNT' | 'DURATION';
+    cycleType: CycleType;
+    countType: CountType;
     cycleCount: number;
     goal: number;
     accumulation: number; // 누적 값
@@ -27,7 +28,7 @@ export type TasksTypes = {
   };
   taskPush: {
     id: number;
-    cycleType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR';
+    cycleType: CycleType;
     pushTime: string;
     isPushEnabled: boolean;
     isActive: boolean;
@@ -57,12 +58,12 @@ export type TasksTypes = {
     updatedAt: Date;
   };
   progressData: {
-    totalDays: number;
-    elapsedDays: number;
-    goal: number;
-    accumulation: number;
-    expectedAccumulation: number;
-    achivementRate: number;
-    estimatedAchivementRate: number;
+    totalDays: number; // 총 Task 일수(시작~종료)
+    elapsedDays: number; // 오늘까지의 경과 일수(시작~ 오늘)
+    goal: number; // 목표량
+    accumulation: number; // 누적량
+    expectedAccumulation: number; // 예상 누적량
+    achivementRate: number; // 달성률
+    estimatedAchivementRate: number; // 진행률(달성진행률)
   };
 };
