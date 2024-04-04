@@ -91,6 +91,7 @@ export default function LoginForm() {
           placeholder="이메일을 입력해 주세요"
           value={values.email}
           error={touched?.email && errors?.email}
+          className="w-full"
           required
         />
         <ErrorMsg name="email" errors={errors.email} touched={touched.email} />
@@ -106,6 +107,7 @@ export default function LoginForm() {
           value={values.password}
           error={touched?.password && errors?.password}
           required
+          className="w-full"
         />
         <ErrorMsg
           name="password"
@@ -126,6 +128,7 @@ export default function LoginForm() {
         disabled={submitLoading}
         type="submit"
         style={{ marginTop: '1.5rem' }}
+        className="w-full"
       >
         로그인
       </Button>

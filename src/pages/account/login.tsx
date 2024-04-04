@@ -4,8 +4,8 @@ import { useRouter } from 'next/router';
 export default function LoginPage() {
   const router = useRouter();
   return (
-    <main className="flex min-h-screen flex-col items-center p-24 bg-gray-50">
-      <div>
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-xl mx-auto pt-16 px-3">
         <div className="flex w-full rounded-t-lg bg-gray-100">
           <button
             className="bg-white p-3 flex-1 rounded-t-lg font-bold text-lg"
@@ -32,6 +32,6 @@ export default function LoginPage() {
           <LoginForm />
         </div>
       </div>
-    </main>
+    </div>
   );
 }
