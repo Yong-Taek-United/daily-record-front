@@ -8,7 +8,7 @@ import SvgFilledDownArrow from '@images/filled-down-arrow.svg';
 import SvgUpdatePencilRound from '@images/update-button-round.svg';
 import SvgKebab from '@images/kebab-menu.svg';
 import SvgDeleteCan from '@images/delete-can.svg';
-
+import SvgRigthArrow from '@images/right-arrow.svg';
 export {
   SvgCheck,
   SvgUpdatePencil,
@@ -20,4 +20,5 @@ export {
   SvgUpdatePencilRound,
   SvgKebab,
   SvgDeleteCan,
+  SvgRigthArrow,
 };
