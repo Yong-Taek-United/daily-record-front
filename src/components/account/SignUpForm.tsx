@@ -209,6 +209,7 @@ export default function SignUpForm() {
           value={values.email}
           error={touched?.email && errors?.email}
           required
+          className="w-full"
         />
         {!isChecked ? (
           <div
@@ -243,6 +244,7 @@ export default function SignUpForm() {
           value={values.nickname}
           error={touched?.nickname && errors?.nickname}
           required
+          className="w-full"
         />
         <ErrorMsg
           name="nickname"
@@ -261,6 +263,7 @@ export default function SignUpForm() {
           value={values.password}
           error={touched?.password && errors?.password}
           required
+          className="w-full"
         />
         <ErrorMsg
           name="password"
@@ -279,6 +282,7 @@ export default function SignUpForm() {
           value={values.confirmPassword}
           error={touched?.confirmPassword && errors?.confirmPassword}
           required
+          className="w-full"
         />
         <ErrorMsg
           name="confirmPassword"
@@ -291,6 +295,7 @@ export default function SignUpForm() {
         disabled={submitLoading}
         type="submit"
         style={{ marginTop: '1.5rem' }}
+        className="w-full"
       >
         작성 완료하고 가입하기
       </Button>
