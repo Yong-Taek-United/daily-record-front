@@ -89,6 +89,7 @@ export default function FindPasswordForm() {
           value={values.email}
           error={touched?.email && errors?.email}
           required
+          className="w-full"
         />
         <ErrorMsg name="email" errors={errors.email} touched={touched.email} />
       </div>
@@ -96,6 +97,7 @@ export default function FindPasswordForm() {
         disabled={submitLoading}
         type="submit"
         style={{ marginTop: '1.5rem' }}
+        className="w-full"
       >
         이메일 보내기
       </Button>
