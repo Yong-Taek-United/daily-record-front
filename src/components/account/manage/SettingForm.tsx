@@ -1,12 +1,13 @@
 import { getUserInfo } from '@/api/account/user';
+import Button from '@/components/Button';
 import ProfileImg from '@/components/UI/ProfileImg';
-import { UserInfoField } from '@/components/UI/UserInfoField';
+import { UserInfoField } from '@/components/UserInfoField';
 import useSWR from 'swr';
 export default function SettingForm() {
   const { data, isLoading } = useSWR('getUserInfo', getUserInfo);
 
   return (
-    <div className="flex flex-col items-center justify-center px-5 pt-4 pb-5 bg-white rounded-lg">
+    <div className="flex flex-col items-center justify-center px-4 pt-4 pb-5 bg-white rounded-lg">
       <div className="flex justify-center my-5">
         <ProfileImg onClick={() => null} height={88} width={88} />
       </div>
@@ -49,6 +50,15 @@ export default function SettingForm() {
             <div className="h-5 bg-gray-200 rounded-md w-36 animate-pulse"></div>
           )}
         </div>
+      </div>
+      <div className="ml-auto">
+        <Button
+          // disabled={submitLoading}
+          // onClick={() => setIsEdit(true)}
+          style={{ width: 50, fontSize: 15 }}
+        >
+          변경
+        </Button>
       </div>
     </div>
   );
