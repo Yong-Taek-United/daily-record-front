@@ -1,11 +1,8 @@
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
-import { Noto_Sans, Inter } from 'next/font/google';
-
-const NotoSans = Noto_Sans({
-  subsets: ['latin'],
-  weight: ['400', '500', '800'],
-});
+import { Inter } from 'next/font/google';
+// import '../styles/custom-big-calendar.css';
+// import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 const InterFont = Inter({
   subsets: ['latin'],
