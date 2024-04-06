@@ -109,3 +109,21 @@ export function convertCountToKorean(countType: 'COUNT' | 'DURATION') {
       return '';
   }
 }
+
+// 전화번호 하이픈 추가
+export function formatPhoneNumber(phoneNumber: string) {
+  // 숫자만 남기고 나머지 문자 제거
+  if (!phoneNumber) return '전화번호 정보 없음';
+
+  const numericString = phoneNumber.replace(/\D/g, '');
+
+  // 전화번호 패턴에 따라 포맷 변경
+  if (numericString.length === 10) {
+    return numericString.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+  } else if (numericString.length === 11) {
+    return numericString.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+  } else {
+    // 길이가 10 또는 11이 아닌 경우 원래 문자열 반환
+    return phoneNumber;
+  }
+}
