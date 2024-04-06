@@ -1,0 +1,71 @@
+/* styles/custom-big-calendar.css */
+
+/* 캘린더 헤더 스타일 커스텀 */
+
+.rbc-month-view {
+  border: none !important;
+}
+.rbc-calendar .rbc-header {
+  background-color: transparent;
+  color: black;
+  padding: 10px 5px;
+  text-align: right;
+  border: none !important;
+  font-weight: semibold;
+}
+
+.rbc-calendar .rbc-date-cell {
+  text-align: right;
+  font-weight: semibold;
+  padding: 0 5px;
+}
+
+.rbc-calendar .rbc-date-cell.rbc-current {
+  /* background-color: #5081ff; */
+  /* color: white; */
+}
+
+.rbc-calendar .rbc-show-more {
+  color: black;
+  font-size: 11px;
+}
+
+.rbc-calendar .rbc-show-more:hover {
+  color: black;
+}
+
+.rbc-calendar .rbc-month-row + .rbc-month-row {
+  border: none !important;
+}
+
+.rbc-calendar .rbc-off-range-bg {
+  background-color: white;
+}
+
+/* 이벤트 스타일 커스텀 */
+.rbc-event {
+  background-color: #9e1c8a;
+  border-radius: 4px;
+  padding: 4px;
+  color: white;
+  border: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 오늘 날짜 스타일 커스텀 */
+.rbc-today {
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+.rbc-date-cell.rbc-now {
+  font-weight: normal !important;
+}
+
+.rbc-day-bg {
+  border-top: 1px solid rgb(156 163 175) !important;
+  border-right: 1px solid rgb(156 163 175) !important;
+  border-bottom: none !important;
+  border-left: none !important;
+  margin-bottom: 2px;
+  border-radius: 2px;
+}

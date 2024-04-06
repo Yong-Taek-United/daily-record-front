@@ -1,8 +1,8 @@
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import { Inter } from 'next/font/google';
-// import '../styles/custom-big-calendar.css';
-// import 'react-big-calendar/lib/css/react-big-calendar.css';
+import '../styles/custom-big-calendar.css';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 const InterFont = Inter({
   subsets: ['latin'],
