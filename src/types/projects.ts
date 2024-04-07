@@ -65,5 +65,6 @@ export type TasksTypes = {
     expectedAccumulation: number; // 예상 누적량
     achivementRate: number; // 달성률
     estimatedAchivementRate: number; // 진행률(달성진행률)
+    expectedAchivementRate: number; // 예정 달성률
   };
 };
