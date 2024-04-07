@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { instance } from '../instance';
 import { UserDataType } from '@/types/user';
+import { instanceSSR } from '../authInterceptorWithSSR';
 
 export function login(data: {
   email: string;
@@ -10,5 +11,5 @@ export function login(data: {
 }
 
 export function logout() {
-  return instance.post('/auth/logout');
+  return instanceSSR.post('/auth/logout');
 }
