@@ -45,8 +45,8 @@ export default function TaskListItem({
         <div className="flex justify-start text-sm font-normal md:text-lg md:font-medium">
           <div className="">{task.startedAt.replaceAll('-', '.')}</div>
           <div className="mx-2">-</div>
-          <div>{task.finishedAt.replaceAll('-', '.')}</div>
-          <div className="ml-2">({task.progressData.totalDays}일)</div>
+          <div>{task?.finishedAt.replaceAll('-', '.')}</div>
+          <div className="ml-2">({task?.progressData.totalDays}일)</div>
         </div>
         <button className="relative" onClick={() => setOpenMenu(!openMenu)}>
           <SvgKebab className="stroke-gray-400" />
@@ -61,7 +61,7 @@ export default function TaskListItem({
                   className={`flex justify-between h-8 px-2 py-1 border-b border-gray-400`}
                   onClick={() => {
                     setOpenMenu(false);
-                    onUpdateTask(task.id);
+                    onUpdateTask(task?.id);
                   }}
                 >
                   <div className="self-center my-auto">
@@ -73,7 +73,7 @@ export default function TaskListItem({
                 </div>
                 <div
                   className={`flex justify-between h-8 px-2 py-1`}
-                  onClick={() => handleDeleteTask(task.id)}
+                  onClick={() => handleDeleteTask(task?.id)}
                 >
                   <div className="self-center w-5 my-auto">
                     <SvgDeleteCan className="mx-auto" />
@@ -142,8 +142,8 @@ export default function TaskListItem({
           <div
             className={`absolute h-full z-[5] rounded-sm hover:shadow-md`}
             style={{
-              backgroundColor: `#${task.color.colorCode}`,
-              width: `${task.progressData.achivementRate * 100}%`,
+              backgroundColor: `#${task.color?.colorCode}`,
+              width: `${task.progressData?.achivementRate * 100}%`,
             }}
           >
             {/* {showAccumulation && (
@@ -159,18 +159,18 @@ export default function TaskListItem({
           </div>
           {/* 예상 진행 */}
           <div
-            className={`absolute h-full z-[3] rounded-sm opacity-50 hover:shadow-md hover:opacity-70`}
+            className={`absolute h-full z-[10] rounded-sm opacity-50 hover:shadow-md hover:opacity-70`}
             style={{
-              backgroundColor: `#${task.color.colorCode}`,
-              width: `${task.progressData.estimatedAchivementRate * 100}%`,
+              backgroundColor: `#${task.color?.colorCode}`,
+              width: `${task.progressData?.expectedAchivementRate * 100}%`,
             }}
           >
             <div className="hidden hover:inline-block"></div>
           </div>
         </div>
         <div className="items-center hidden text-sm font-semibold sm:text-base md:inline-block">
-          {task.progressData.goal}
-          {task.taskGoal.countType === 'COUNT' ? '회' : '시간'}
+          {task.progressData?.goal}
+          {task.taskGoal?.countType === 'COUNT' ? '회' : '시간'}
         </div>
       </div>
       <div className="my-2 text-sm font-normal text-gray-500 whitespace-pre-wrap sm:text-base">
