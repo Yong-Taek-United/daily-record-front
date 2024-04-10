@@ -23,7 +23,7 @@ export default function Toolbar({ date, onNavigate }: ToolbarProps) {
   };
 
   return (
-    <div className="flex justify-between py-2 px-4 sm:py-4 sm:px-8">
+    <div className="flex justify-between px-1 py-2 sm:py-4 sm:px-0">
       <div>
         <p className="text-base font-medium sm:text-lg">{`${date.getFullYear()}년 ${
           date.getMonth() + 1
