@@ -1,4 +1,5 @@
 import { deleteTask } from '@/api/projects/tasks';
+import Portal from '@/components/UI/Portal';
 import { TasksTypes } from '@/types/projects';
 import {
   SvgDeleteCan,
@@ -52,10 +53,13 @@ export default function TaskListItem({
           <SvgKebab className="stroke-gray-400" />
           {!openMenu ? null : (
             <>
-              <div
-                className="fixed z-[15] top-0 rigth-0 w-screen h-screen bg-transparent"
-                onClick={() => setOpenMenu(false)}
-              ></div>
+              <Portal>
+                <div
+                  className="fixed z-[15] top-0 rigth-0 w-screen h-screen"
+                  onClick={() => setOpenMenu(false)}
+                ></div>
+              </Portal>
+
               <div className="z-[20] w-20 absolute right-0 bg-white border border-gray-400 rounded-md top-7 shadow-lg">
                 <div
                   className={`flex justify-between h-8 px-2 py-1 border-b border-gray-400`}
