@@ -1,4 +1,5 @@
 # daily-record
+
 '하루를 기록해요'
 <br />
 <br />
@@ -8,11 +9,13 @@
 <br />
 
 ## 제작 동기
+
 회사 백엔드 동료분과 기술적 부재를 채우기 위해 퇴근 후 같이 고민하며 만들게 되었습니다.
 <br />
 <br />
 
 ## 프론트엔드 파트 기술
+
 - Next.js 13(Page Router), React 18
   - Server-side Rendering, Client-side Rendering을 상황에 맞게 사용하였습니다.
   - Coustom Hook을 설계해 반복적인 로직을 처리하였습니다.
@@ -39,26 +42,31 @@
 
 <br />
 
-## [백엔드 파트 보기](https://github.com/Yong-Taek-United/DailyRecord)
+## [백엔드 파트 보기](https://github.com/Yong-Taek-United/daily-record-back)
 
 <br />
 
 ## 개발 진행
+
 (2023-11 ~ 현재)
-  - 로그인
-  - 비밀번호 찾기
-  - 회원가입
-  - 회원 정보
-    - 상세
-    - 간단 소개 수정 
-  - 프로젝트
-    - 프로젝트 목록 (SSR) [코드 보기](https://github.com/Yong-Taek-United/daily-record-front/blob/06183410fcf85c6568b4523444b06cfd4ac70891/src/pages/projects/dash-board.tsx#L72-L111)
-    - 프로젝트 생성 / 수정 
-  - 과제
-    - 과제 목록
-    - 과제 생성 / 수정 / 삭제
-  - 달력
-    - 달력 데이터 목록 (SSR) 
-  - 액티비티
-    
+
+- 로그인
+- 비밀번호 찾기
+- 회원가입
+- 회원 정보
+  - 상세
+  - 간단 소개 수정
+- 프로젝트
+  - 프로젝트 목록 (SSR) [코드 보기](https://github.com/Yong-Taek-United/daily-record-front/blob/06183410fcf85c6568b4523444b06cfd4ac70891/src/pages/projects/dash-board.tsx#L72-L111)
+  - 프로젝트 생성 / 수정
+- 과제
+  - 과제 목록
+  - 과제 생성 / 수정 / 삭제
+- 달력
+  - 달력 데이터 목록 (SSR)
+- 액티비티
+  - 액티비티 목록
+
 <br />
+
+2024.04.10 업데이트
