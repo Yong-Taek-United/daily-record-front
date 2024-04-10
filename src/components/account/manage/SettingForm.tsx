@@ -2,6 +2,7 @@ import { getUserInfo } from '@/api/account/user';
 import Button from '@/components/Button';
 import ProfileImg from '@/components/UI/ProfileImg';
 import { UserInfoField } from '@/components/UserInfoField';
+import { formatPhoneNumber } from '@/utils/utils';
 import useSWR from 'swr';
 export default function SettingForm() {
   const { data, isLoading } = useSWR('getUserInfo', getUserInfo);
@@ -21,7 +22,7 @@ export default function SettingForm() {
         <UserInfoField
           label="계정"
           isLoading={isLoading}
-          value={String(data?.data.data.id)}
+          value={String(data?.data.data.username)}
         />
         <UserInfoField
           label="이메일"
@@ -32,7 +33,7 @@ export default function SettingForm() {
         <UserInfoField
           label="휴대폰 번호"
           isLoading={isLoading}
-          value={data?.data.data.userProfile.phone}
+          value={formatPhoneNumber(data?.data?.data?.userProfile?.phone || '')}
           isAuth={data?.data.data.isPhoneVerified}
         />
 
