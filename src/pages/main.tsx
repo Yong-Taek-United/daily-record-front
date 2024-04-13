@@ -3,7 +3,7 @@ import { getCalendarData } from '@/api/calendar/calendar';
 import { ActivityType, CalendarDataType } from '@/types/calendar';
 import { Event as RCBEvent } from 'react-big-calendar';
 import { GetServerSidePropsContext } from 'next';
-import { Children, cloneElement, useState } from 'react';
+import { useState } from 'react';
 import ActivitiesList from '@/components/calendar/ActivitiesList';
 import MobileActivitiesList from '@/components/calendar/MobileActivitiesList';
 import Header from '@/components/UI/Header';
@@ -35,6 +35,7 @@ export default function Main({
   const formatCalendarData = (
     CalendarData: CalendarDataType[]
   ): CalendarEvent[] => {
+    if (!CalendarData) return [];
     let events: CalendarEvent[] = CalendarData.flatMap((data) =>
       data.activities.map((activity) => ({
         id: activity.id,
@@ -68,7 +69,7 @@ export default function Main({
     <main className="w-full h-screen bg-gray-50">
       <Header />
       <MobileActivitiesList
-        filteredActivities={activities.filter(
+        filteredActivities={activities?.filter(
           (activity) =>
             activity.actedDate === formatDate(selectedDate || new Date())
         )}
@@ -103,7 +104,7 @@ export default function Main({
         </div>
 
         <ActivitiesList
-          filteredActivities={activities.filter(
+          filteredActivities={activities?.filter(
             (activity) =>
               activity.actedDate === formatDate(selectedDate || new Date())
           )}
