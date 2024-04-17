@@ -147,7 +147,10 @@ export default function TaskListItem({
             className={`absolute h-full z-[5] rounded-sm hover:shadow-md`}
             style={{
               backgroundColor: `#${task.color?.colorCode}`,
-              width: `${task.progressData?.achivementRate * 100}%`,
+              width: `${Math.min(
+                task.progressData?.achivementRate * 100,
+                100
+              )}%`,
             }}
           >
             {/* {showAccumulation && (
@@ -166,7 +169,10 @@ export default function TaskListItem({
             className={`absolute h-full z-[10] rounded-sm opacity-50 hover:shadow-md hover:opacity-70`}
             style={{
               backgroundColor: `#${task.color?.colorCode}`,
-              width: `${task.progressData?.expectedAchivementRate * 100}%`,
+              width: `${Math.min(
+                task.progressData?.expectedAchivementRate * 100,
+                100
+              )}%`,
             }}
           >
             <div className="hidden hover:inline-block"></div>
