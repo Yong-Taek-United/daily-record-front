@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { GetServerSidePropsContext } from 'next';
 import Router from 'next/router';
-import { getCookie, setCookie } from 'cookies-next';
+import { getCookie, setCookie, deleteCookie } from 'cookies-next';
 
 const isServer = () => {
   return typeof window === 'undefined';
@@ -132,9 +132,13 @@ const refreshToken = async (oError: AxiosError) => {
   } catch (error) {
     // on error go to login page
     if (!isServer() && !Router.asPath.includes(LOGIN_PATH)) {
+      deleteCookie('accessToken');
+      deleteCookie('refreshToken');
       Router.push(LOGIN_PATH);
     }
     if (isServer()) {
+      deleteCookie('accessToken', { req: context.req, res: context.res });
+      deleteCookie('refreshToken', { req: context.req, res: context.res });
       context.res.setHeader('location', LOGIN_PATH);
       context.res.statusCode = 302;
       context.res.end();
