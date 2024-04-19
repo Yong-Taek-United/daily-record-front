@@ -36,6 +36,7 @@ export default function Main({
     CalendarData: CalendarDataType[]
   ): CalendarEvent[] => {
     if (!CalendarData) return [];
+
     let events: CalendarEvent[] = CalendarData.flatMap((data) =>
       data.activities.map((activity) => ({
         id: activity.id,
@@ -89,7 +90,6 @@ export default function Main({
             components={{
               toolbar: Toolbar,
             }}
-            defaultDate={new Date(`${year}-${month}`)}
             events={formatCalendarData(activities)}
             onSelectEvent={({ start, resource }) => {
               handleSelect(start as Date);
