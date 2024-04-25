@@ -4,6 +4,7 @@ import { getDataFromLocalStorage } from '@/utils/utils';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import ProfileImg from './ProfileImg';
+import { deleteCookie } from 'cookies-next';
 
 type MenuListType = {
   name: string;
@@ -25,10 +26,12 @@ export default function Header() {
   const handleLogout = async () => {
     try {
       const { data, status } = await logout();
-      if (status === 200) {
-        router.push('/account/login');
-      }
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      deleteCookie('accessToken');
+      deleteCookie('refreshToken');
+      router.push('/account/login');
+    }
   };
 
   return (
