@@ -28,7 +28,7 @@ export default function LoginForm() {
 
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
     useForm<LoginFormTypes>({
-      initialValues: { email: '', password: '' },
+      initialValues: { email: 'user@example.com', password: 'qwer1234' },
       validate: (values) => {
         const errors = {
           email: '',
@@ -54,6 +54,7 @@ export default function LoginForm() {
       },
       async onSubmit(values) {
         // 로그인 로직입니다.
+
         try {
           setSubmitLoading(true);
           const { data, status } = await login(values);
@@ -81,7 +82,15 @@ export default function LoginForm() {
     });
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (openAlert.state) {
+          return;
+        }
+        handleSubmit(e);
+      }}
+    >
       <div className="my-5">
         <Input
           onChange={handleChange}
