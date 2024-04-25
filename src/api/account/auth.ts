@@ -11,5 +11,5 @@ export function login(data: {
 }
 
 export function logout() {
-  return instanceSSR.post('/auth/logout');
+  return instance.post('/auth/logout');
 }
